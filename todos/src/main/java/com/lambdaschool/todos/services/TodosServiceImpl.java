@@ -1,6 +1,7 @@
 package com.lambdaschool.todos.services;
 
 import com.lambdaschool.todos.models.Todos;
+import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.repository.TodosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,17 @@ public class TodosServiceImpl implements TodosService
             .iterator()
             .forEachRemaining(list::add);
         return list;
+    }
+
+    @Override
+    public Todos save(Todos todos)
+    {
+        Todos newTodo = new Todos();
+
+        newTodo.setDescription(todos.getDescription()
+            .toLowerCase());
+        newTodo.setUser(todos.getUser());
+
+        return todosRepos.save(newTodo);
     }
 }
