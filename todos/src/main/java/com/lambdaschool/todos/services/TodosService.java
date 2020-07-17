@@ -7,5 +7,6 @@ import java.util.List;
 public interface TodosService
 {
     List<Todos> findAll();
+
     void markComplete(long todoid);
 }

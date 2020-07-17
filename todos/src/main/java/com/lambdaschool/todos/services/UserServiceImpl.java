@@ -25,6 +25,9 @@ public class UserServiceImpl implements UserService
     @Autowired
     private UserRepository userrepos;
 
+    @Autowired
+    private TodosService todosService;
+
     /**
      * Connects this service to the auditing service in order to get current user name
      */
@@ -87,6 +90,6 @@ public class UserServiceImpl implements UserService
     @Override
     public List<UserNameCountTodos> getCountUserTodos()
     {
-        return null;
+        return userrepos.getCountUserTodos();
     }
 }
