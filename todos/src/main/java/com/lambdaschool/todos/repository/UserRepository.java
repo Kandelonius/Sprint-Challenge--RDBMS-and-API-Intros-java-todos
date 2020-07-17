@@ -22,4 +22,7 @@ public interface UserRepository extends CrudRepository<User, Long>
         " WHERE NOT t.completed GROUP BY u.username ORDER BY u.username",
         nativeQuery = true)
     List<UserNameCountTodos> getCountUserTodos();
+
+    User findByUsername(String username);
+
 }

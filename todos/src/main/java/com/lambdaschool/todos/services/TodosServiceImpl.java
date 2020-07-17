@@ -1,7 +1,6 @@
 package com.lambdaschool.todos.services;
 
 import com.lambdaschool.todos.models.Todos;
-import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.repository.TodosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +50,11 @@ public class TodosServiceImpl implements TodosService
         newTodo.setUser(todos.getUser());
 
         return todosRepos.save(newTodo);
+    }
+
+    @Override
+    public Todos findTodoById(long id)
+    {
+        return null;
     }
 }

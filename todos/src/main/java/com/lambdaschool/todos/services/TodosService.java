@@ -1,7 +1,6 @@
 package com.lambdaschool.todos.services;
 
 import com.lambdaschool.todos.models.Todos;
-import com.lambdaschool.todos.models.User;
 
 import java.util.List;
 
@@ -10,6 +9,8 @@ public interface TodosService
     List<Todos> findAll();
 
     Todos save(Todos todos);
+
+    Todos findTodoById(long id);
 
     void markComplete(long todoid);
 }

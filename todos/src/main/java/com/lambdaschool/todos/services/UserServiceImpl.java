@@ -69,6 +69,10 @@ public class UserServiceImpl implements UserService
     {
         User newUser = new User();
 
+        if (user.getUserid() != 0) {
+            newUser.setUserid(user.getUserid());
+        }
+
         newUser.setUsername(user.getUsername()
             .toLowerCase());
         newUser.setPassword(user.getPassword());
@@ -91,5 +95,47 @@ public class UserServiceImpl implements UserService
     public List<UserNameCountTodos> getCountUserTodos()
     {
         return userrepos.getCountUserTodos();
+    }
+
+    @Override
+    public User update(
+        User user,
+        long id)
+    {
+        User currentUser = findUserById(id);
+
+        if (user.getUsername() != null)
+        {
+            currentUser.setUsername(user.getUsername()
+                .toLowerCase());
+        }
+
+        if (user.getPassword() != null)
+        {
+            currentUser.setPassword(user.getPassword());
+        }
+
+        if (user.getPrimaryemail() != null)
+        {
+            currentUser.setPrimaryemail(user.getPrimaryemail()
+                .toLowerCase());
+        }
+
+        if (user.getTodos()
+            .size() > 0)
+        {
+            currentUser.getTodos()
+                .clear();
+            for (Todos td : user.getTodos())
+            {
+                Todos addTodo = todosService.findTodoById(td.getUser()
+                    .getUserid());
+
+                currentUser.getTodos()
+                    .add(new Todos(currentUser, td.getDescription()));
+            }
+        }
+
+        return userrepos.save(currentUser);
     }
 }

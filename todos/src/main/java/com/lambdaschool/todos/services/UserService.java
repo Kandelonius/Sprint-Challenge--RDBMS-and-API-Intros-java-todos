@@ -48,4 +48,8 @@ public interface UserService
      * @return List of UserNameCountTodos
      */
     List<UserNameCountTodos> getCountUserTodos();
+
+    User update(
+        User user,
+        long id);
 }
