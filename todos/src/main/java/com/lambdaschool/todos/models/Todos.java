@@ -15,7 +15,7 @@ public class Todos
     @Column(nullable = false)
     private String description;
 
-    private boolean completed;
+    private boolean completed = false;
 
     @ManyToOne
     @JoinColumn(name = "userid",
@@ -31,8 +31,8 @@ public class Todos
         User user,
         String description)
     {
-        this.description = description;
         this.user = user;
+        this.description = description;
     }
 
     public long getTodoid()
@@ -63,5 +63,15 @@ public class Todos
     public void setCompleted(boolean completed)
     {
         this.completed = completed;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 }
