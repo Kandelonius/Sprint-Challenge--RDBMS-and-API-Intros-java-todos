@@ -1,5 +1,6 @@
 package com.lambdaschool.todos.services;
 
+import com.lambdaschool.todos.models.Todos;
 import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.repository.UserRepository;
 import com.lambdaschool.todos.views.UserNameCountTodos;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService
      */
     @Autowired
     private UserRepository userrepos;
+
+    @Autowired
+    private TodosService todosService;
 
     /**
      * Connects this service to the auditing service in order to get current user name
@@ -65,11 +69,24 @@ public class UserServiceImpl implements UserService
     {
         User newUser = new User();
 
+        if (user.getUserid() != 0) {
+            newUser.setUserid(user.getUserid());
+        }
+
         newUser.setUsername(user.getUsername()
             .toLowerCase());
         newUser.setPassword(user.getPassword());
         newUser.setPrimaryemail(user.getPrimaryemail()
             .toLowerCase());
+
+        newUser.getTodos()
+            .clear();
+        for (Todos td : user.getTodos())
+        {
+            newUser.getTodos()
+                .add(new Todos(newUser,
+                    td.getDescription()));
+        }
 
         return userrepos.save(newUser);
     }
@@ -77,6 +94,48 @@ public class UserServiceImpl implements UserService
     @Override
     public List<UserNameCountTodos> getCountUserTodos()
     {
-        return null;
+        return userrepos.getCountUserTodos();
+    }
+
+    @Override
+    public User update(
+        User user,
+        long id)
+    {
+        User currentUser = findUserById(id);
+
+        if (user.getUsername() != null)
+        {
+            currentUser.setUsername(user.getUsername()
+                .toLowerCase());
+        }
+
+        if (user.getPassword() != null)
+        {
+            currentUser.setPassword(user.getPassword());
+        }
+
+        if (user.getPrimaryemail() != null)
+        {
+            currentUser.setPrimaryemail(user.getPrimaryemail()
+                .toLowerCase());
+        }
+
+        if (user.getTodos()
+            .size() > 0)
+        {
+            currentUser.getTodos()
+                .clear();
+            for (Todos td : user.getTodos())
+            {
+                Todos addTodo = todosService.findTodoById(td.getUser()
+                    .getUserid());
+
+                currentUser.getTodos()
+                    .add(new Todos(currentUser, td.getDescription()));
+            }
+        }
+
+        return userrepos.save(currentUser);
     }
 }

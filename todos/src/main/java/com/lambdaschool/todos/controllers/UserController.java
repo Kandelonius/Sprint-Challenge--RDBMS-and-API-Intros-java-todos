@@ -95,6 +95,29 @@ public class UserController
             HttpStatus.CREATED);
     }
 
+//    @PostMapping(value = "/user/{userid}",
+//        consumes = {"application/json"})
+//    public ResponseEntity<?> addNewUserWithId(
+//        @Valid
+//        @RequestBody
+//            User newuser) throws URISyntaxException
+//    {
+//        newuser.setUserid(0);
+//        newuser = userService.save(newuser);
+//
+//        // set the location header for the newly created resource
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//            .path("/{userid}")
+//            .buildAndExpand(newuser.getUserid())
+//            .toUri();
+//        responseHeaders.setLocation(newUserURI);
+//
+//        return new ResponseEntity<>(null,
+//            responseHeaders,
+//            HttpStatus.CREATED);
+//    }
+
     /**
      * Deletes a given user along with associated todos.
      * <br>Example: <a href="http://localhost:2019/users/user/14">http://localhost:2019/users/user/14</a>
